@@ -8,8 +8,7 @@ const express = require("express"),
     passport = require("passport"),
     cookieParser = require("cookie-parser"),
     expressSession = require("express-session"),
-    layouts = require("express-ejs-layouts"),
-    User = require("./models/user");
+    layouts = require("express-ejs-layouts");
 
 mongoose.Promise = global.Promise;
 

@@ -1,15 +1,20 @@
 "use strict";
 
+const Category = require("../models/category");
+
 module.exports = {
-    index: (req, res) => {
-        res.render("index", {
-            categoryList: [
-                {_id: 1, name: "test1"},
-                {_id: 2, name: "test2"},
-                {_id: 3, name: "test3"},
-                {_id: 4, name: "test4"},
-                {_id: 5, name: "test5"}
-            ]
-        });
+    index: (req, res, next) => {
+        Category.find()
+            .then(categories => {
+                res.locals.categories = categories
+                next();
+            })
+            .catch(error => {
+                console.log(`Error fetching categories: ${error.message}`);
+                next(error);
+            });
+    },
+    indexView: (req, res) => {
+        res.render("index");
     }
 }
