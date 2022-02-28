@@ -36,21 +36,6 @@ module.exports = {
                 next(error);
             });
     },
-    // show: (req, res, next) => {
-    //     let threadId = req.params.id;
-    //     Thread.findById(threadId)
-    //         .then(thread => {
-    //             res.locals.thread = thread;
-    //             next();
-    //         })
-    //         .catch(error => {
-    //             console.log(`Error fetching thread by ID: ${error.message}`);
-    //             next(error);
-    //         });
-    // },
-    // showView: (req, res) => {
-    //     res.render("threads/show");
-    // },
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath !== undefined) res.redirect(redirectPath);

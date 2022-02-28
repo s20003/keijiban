@@ -50,21 +50,6 @@ module.exports = {
         if (redirectPath) res.redirect(redirectPath);
         else next();
     },
-    // show: (req, res, next) => {
-    //     let userId = req.params.id;
-    //     User.findById(userId)
-    //         .then(user => {
-    //             res.locals.users = user;
-    //             next();
-    //         })
-    //         .catch(error => {
-    //             console.log(`Error fetching user by ID: ${error.message}`);
-    //             next(error);
-    //         });
-    // },
-    // showView: (req, res) => {
-    //     res.render("users/show");
-    // },
     login: (req, res) => {
         res.render("users/login");
     },
