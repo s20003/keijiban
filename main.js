@@ -3,12 +3,14 @@
 const express = require("express"),
     app = express(),
     router = require("./routes/index"),
+    layouts = require("express-ejs-layouts"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
-    passport = require("passport"),
-    cookieParser = require("cookie-parser"),
     expressSession = require("express-session"),
-    layouts = require("express-ejs-layouts");
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash"),
+    passport = require("passport"),
+    User = require("./models/user");
 
 mongoose.Promise = global.Promise;
 
@@ -52,14 +54,17 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-/*passport.use(User.createStrategy());
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());*/
+passport.deserializeUser(User.deserializeUser());
+app.use(connectFlash());
+
 app.use((req, res, next) => {
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.currentUser = req.user;
+    res.locals.flashMessages = req.flash();
     next();
-})
+});
 
 app.use("/", router);
 

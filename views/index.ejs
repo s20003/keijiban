@@ -1,6 +1,6 @@
 <h1>カテゴリ</h1>
 <ul>
-        <% categories.forEach(cat => { %>
-                <li><a href="/threads/<%= cat._id %>"><%= cat.name %></a></li>
-        <% }); %>
+    <% categories.forEach(cat => { %>
+        <li><a href="threads/<%= cat._id %>"><%= cat.name %></a></li>
+    <% }); %>
 </ul>

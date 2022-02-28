@@ -1,13 +1,14 @@
 "use strict"
 
-const Category = require("../models/category");
+const Category = require("../models/category"),
+    Thread = require("../models/thread");
 
 module.exports = {
     index: (req, res, next) => {
         let categoryId = req.params.id;
         Category.findById(categoryId)
             .then(category => {
-                res.locals.redirect = `/threads/${categoryId}`;
+                res.locals.redirect = `${categoryId}`;
                 res.locals.categories = category;
                 next();
             });
@@ -15,25 +16,26 @@ module.exports = {
     indexView: (req, res) => {
         res.render("threads/index");
     },
-    // new: (req, res) => {
-    //     res.render("threads/new");
-    // },
-    // create: (req, res, next) => {
-    //     let threadParams = {
-    //         title: req.body.title,
-    //         description: req.body.description
-    //     };
-    //     Thread.create(threadParams)
-    //         .then(thread => {
-    //             res.locals.redirect = "/threads";
-    //             res.locals.threads = thread;
-    //             next();
-    //         })
-    //         .catch(error => {
-    //             console.log(`Error saving thread: ${error.message}`);
-    //             next(error);
-    //         });
-    // },
+    new: (req, res) => {
+        res.render("threads/new");
+    },
+    create: (req, res, next) => {
+        //let categoryId = req.params.id;
+        let threadParams = {
+            title: req.body.title,
+            message: req.body.message
+        };
+        Thread.create(threadParams)
+            .then(thread => {
+                res.locals.redirect = "/";
+                res.locals.threads = thread;
+                next();
+            })
+            .catch(error => {
+                console.log(`Error saving thread: ${error.message}`);
+                next(error);
+            });
+    },
     // show: (req, res, next) => {
     //     let threadId = req.params.id;
     //     Thread.findById(threadId)
@@ -49,9 +51,9 @@ module.exports = {
     // showView: (req, res) => {
     //     res.render("threads/show");
     // },
-    // redirectView: (req, res, next) => {
-    //     let redirectPath = res.locals.redirect;
-    //     if (redirectPath !== undefined) res.redirect(redirectPath);
-    //     else next();
-    // }
+    redirectView: (req, res, next) => {
+        let redirectPath = res.locals.redirect;
+        if (redirectPath !== undefined) res.redirect(redirectPath);
+        else next();
+    }
 };
