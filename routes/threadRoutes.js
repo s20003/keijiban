@@ -5,6 +5,6 @@ const router = require("express").Router(),
 
 router.get("/:id", threadController.index, threadController.indexView);
 router.get("/:id/new", threadController.new);
-router.post("/:id/create", threadController.create, threadController.redirectView);
+router.post("/create", threadController.create, threadController.redirectView);
 
 module.exports = router;
