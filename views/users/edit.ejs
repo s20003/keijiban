@@ -1,0 +1,14 @@
+<div>
+    <form method="POST" action="<%= `/users/${user._id}/update?_method=PUT` %>">
+        <h2>編集:</h2>
+        <label for="inputLoginID">ログインID</label>
+        <input type="text" name="loginId" id="inputLoginID" value="<%= user.loginId %>" placeholder="Login ID" autofocus>
+        <br>
+        <label for="inputName">投稿者名</label>
+        <input type="text" name="userName" id="inputName" value="<%= user.userName %>" placeholder="Name">
+        <br>
+        <label for="inputPassword">パスワード</label>
+        <input type="password" name="password" id="inputPassword" value="<%= user.password %>" placeholder="Password">
+        <button type="submit">更新</button>
+    </form>
+</div>

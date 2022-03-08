@@ -31,14 +31,13 @@ module.exports = {
     },
     create: (req, res, next) => {
         if (req.skip) return next();
-        const newUser = new User(getUserParams(req.body));
+        let newUser = new User(getUserParams(req.body));
         User.register(newUser, req.body.password, (error, user) => {
             if (user) {
                 req.flash("success", `${user.loginId}'s account created successfully!`);
                 res.locals.redirect = "/users";
                 next();
             } else {
-                console.log("error");
                 req.flash("error", `Failed to create user account because: ${error.message}.`);
                 res.locals.redirect = "/users/new";
                 next();
@@ -50,6 +49,81 @@ module.exports = {
         if (redirectPath) res.redirect(redirectPath);
         else next();
     },
+    show: (req, res, next) => {
+        let userId = req.params.id;
+        User.findById(userId)
+            .then(user => {
+                res.locals.user = user;
+                next();
+            })
+            .catch(error => {
+                console.log(`Error fetching user by ID: ${error.message}`);
+            });
+    },
+    showView: (req, res) => {
+        res.render("users/show");
+    },
+    edit: (req, res, next) => {
+        let userId = req.params.id;
+        User.findById(userId)
+            .then(user => {
+                res.render("users/edit", {
+                    user: user
+                });
+            })
+            .catch(error => {
+                console.log(`Error fetching user by ID: ${error.message}`);
+            });
+    },
+    update: (req, res, next) => {
+        let userId = req.params.id,
+            userParams = {
+                loginId: req.body.loginId,
+                userName: req.body.userName,
+                password: req.body.password
+            };
+        User.findByIdAndUpdate(userId, {
+            $set: userParams
+        })
+            .then(user => {
+                res.locals.redirect = `/users/${userId}`;
+                res.locals.user = user;
+                next();
+            })
+            .catch(error => {
+                console.log(`Error updating user by ID: ${error.message}`);
+                next(error);
+            });
+    },
+    delete: (req, res, next) => {
+        let userId = req.params.id;
+        User.findByIdAndRemove(userId)
+            .then(() => {
+                res.locals.redirect = "/users";
+                next();
+            })
+            .catch(error => {
+                console.log(`Error deleting user by ID: ${error.message}`);
+                next();
+            });
+    },
+    // create: (req, res, next) => {
+    //     if (req.skip) return next();
+    //     const newUser = new User(getUserParams(req.body));
+    //     User.register(newUser, req.body.password, (error, user) => {
+    //         if (user) {
+    //             req.flash("success", `${user.loginId}'s account created successfully!`);
+    //             res.locals.redirect = "/users";
+    //             next();
+    //         } else {
+    //             console.log("error");
+    //             req.flash("error", `Failed to create user account because: ${error.message}.`);
+    //             res.locals.redirect = "/users/new";
+    //             next();
+    //         }
+    //     });
+    // },
+
     login: (req, res) => {
         res.render("users/login");
     },
@@ -77,9 +151,8 @@ module.exports = {
     },
     logout: (req, res, next) => {
         req.logout();
-        req.locals.redirect = "/";
+        req.flash("success", "You have been logged out!");
+        res.locals.redirect = "/";
         next();
     }
-
-
-}
+};

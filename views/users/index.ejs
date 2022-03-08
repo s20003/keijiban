@@ -1,9 +1,11 @@
-<h2>Users Table</h2>
+<h2>User 一覧</h2>
 <table>
     <thead>
     <tr>
-        <th>loginID</th>
+        <th>LoginID</th>
         <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +18,15 @@
             </td>
             <td>
                 <%= user.userName %>
+            </td>
+            <td>
+                <a href="<%= `/users/${user._id}/edit` %>">
+                    Edit
+                </a>
+            </td>
+            <td>
+                <a href="<%= `/users/${user._id}/delete?_method=DELETE` %>"
+                   onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
             </td>
         </tr>
     <% }); %>
