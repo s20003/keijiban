@@ -1,8 +1,11 @@
 <h2><%= categories.name %></h2>
 
-<a href="<%= `${categories._id}/new` %>">新規スレッド作成</a>
+<% if (currentUser) { %>
+    <a href="/messages/new">新規スレッド作成</a>
+<% } %>
 
-<!-- ↓threadsが取れてない -->
-<%# threads.forEach(thread => { %>
-<!--  <li><%# thread.title %></li> -->
-<%# }); %>
+<!--<ul>-->
+<!--    <%# messages.forEach(message => { %>-->
+<!--        <li><a href="/messages/<%# message._id %>"><%# message.title %></a></li>-->
+<!--    <%# }); %>-->
+<!--</ul>-->

@@ -9,7 +9,6 @@ const express = require("express"),
     expressSession = require("express-session"),
     cookieParser = require("cookie-parser"),
     connectFlash = require("connect-flash"),
-    expressValidator = require("express-validator"),
     passport = require("passport"),
     User = require("./models/user");
 

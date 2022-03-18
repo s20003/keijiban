@@ -63,7 +63,7 @@ module.exports = {
     showView: (req, res) => {
         res.render("users/show");
     },
-    edit: (req, res, next) => {
+    edit: (req, res) => {
         let userId = req.params.id;
         User.findById(userId)
             .then(user => {
@@ -107,23 +107,6 @@ module.exports = {
                 next();
             });
     },
-    // create: (req, res, next) => {
-    //     if (req.skip) return next();
-    //     const newUser = new User(getUserParams(req.body));
-    //     User.register(newUser, req.body.password, (error, user) => {
-    //         if (user) {
-    //             req.flash("success", `${user.loginId}'s account created successfully!`);
-    //             res.locals.redirect = "/users";
-    //             next();
-    //         } else {
-    //             console.log("error");
-    //             req.flash("error", `Failed to create user account because: ${error.message}.`);
-    //             res.locals.redirect = "/users/new";
-    //             next();
-    //         }
-    //     });
-    // },
-
     login: (req, res) => {
         res.render("users/login");
     },

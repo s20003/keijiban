@@ -13,7 +13,5 @@ router.get("/:id/edit", userController.edit);
 router.put("/:id/update", userController.update, userController.redirectView);
 router.delete("/:id/delete", userController.delete, userController.redirectView);
 router.get("/:id", userController.show, userController.showView);
-// router.get("/login", userController.login);
-// router.post("/login", userController.authenticate);
 
 module.exports = router;

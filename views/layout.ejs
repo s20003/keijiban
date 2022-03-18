@@ -6,41 +6,41 @@
     <title>Keijiban</title>
 </head>
 <body>
-    <h1>掲示板</h1>
-    <div>
-        <% if (loggedIn) { %>
-            <div>
-                Logged in as <a href="<%= `users/${currentUser._id}` %>">
-                    <%= currentUser.loginId %>
-                </a>
-            </div>
-            <div>
-                <a href="/users/logout">
-                    ログアウト
-                </a>
-            </div>
-        <% } else { %>
-            <div>
-                <a href="users/login">
-                    ログイン
-                </a>
-            </div>
-        <% } %>
-    </div>
+<h1><a href="/">掲示板</a></h1>
+<div>
+    <% if (loggedIn) { %>
+        <div>
+            Logged in as <a href="<%= `/users/${currentUser._id}` %>">
+                <%= currentUser.loginId %>
+            </a>
+        </div>
+        <div>
+            <a href="/users/logout">
+                ログアウト
+            </a>
+        </div>
+    <% } else { %>
+        <div>
+            <a href="/users/login">
+                ログイン
+            </a>
+        </div>
+    <% } %>
+</div>
 
-    <div>
-        <% if(flashMessages) { %>
-            <% if (flashMessages.success) { %>
-                <div>
-                    <%= flashMessages.success %>
-                </div>
-            <% } else if (flashMessages.error) { %>
-                <div>
-                    <%= flashMessages.error %>
-                </div>
-            <% } %>
+<div>
+    <% if(flashMessages) { %>
+        <% if (flashMessages.success) { %>
+            <div>
+                <%= flashMessages.success %>
+            </div>
+        <% } else if (flashMessages.error) { %>
+            <div>
+                <%= flashMessages.error %>
+            </div>
         <% } %>
-    </div>
-    <%- body %>
+    <% } %>
+</div>
+<%- body %>
 </body>
 </html>
